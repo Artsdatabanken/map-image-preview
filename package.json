@@ -1,15 +1,29 @@
 {
   "name": "map-image-preview",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Render static raster preview images of maps",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "bin": {
+    "map-image-preview": "./index.js"
+  },
+  "keywords": [
+    "rasterize",
+    "geojson"
+  ],
+  "author": "Bjorn Reppen <bjreppen@gmail.com> (https://github.com/bjornreppen)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Artsdatabanken/map-image-preview"
+  },
+  "license": "MIT",
   "dependencies": {
-    "canvas": "^2.5.0"
+    "canvas": "^2.5.0",
+    "tinycolor2": "^1.4.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
