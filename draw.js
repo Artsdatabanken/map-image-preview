@@ -21,8 +21,8 @@ function render(geojson, meta, options = {}) {
     ctx.fillStyle = lookupColor(meta, feature.properties);
     ctx.strokeStyle =
       options.stroke ||
-      tinycolor(meta.farge)
-        .darken(40)
+      tinycolor(ctx.fillStyle)
+        .darken(30)
         .toString();
     drawGeometries(ctx, options.stroke, feature, scaling);
   });
