@@ -50,6 +50,7 @@ function drawGeometry(ctx, props, stroke, coordinates, scaling) {
 }
 
 function lookupColor(meta, properties) {
+  if (!properties) return meta.farge;
   let code = properties.code;
   if (!code) return meta.farge;
   code = code.replace("LA-", "-");
