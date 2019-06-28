@@ -18,7 +18,7 @@ function render(geojson, meta, options = {}) {
   ctx.antialias = options.antialias || "default";
 
   geojson.features.forEach(feature => {
-    ctx.fillStyle = meta.farge;
+    ctx.fillStyle = lookupColor(meta, feature.properties);
     ctx.strokeStyle =
       options.stroke ||
       tinycolor(meta.farge)
@@ -46,6 +46,17 @@ function drawGeometry(ctx, props, stroke, coordinates, scaling) {
 
   ctx.fill();
   ctx.stroke();
+}
+
+function lookupColor(meta, properties) {
+  let code = properties.code;
+  if (!code) return meta.farge;
+  code = code.replace("LA-", "-");
+  code = code.replace("NA-", "-");
+  for (var barn of meta.barn) {
+    if (barn.kode.indexOf(code) >= 0) return barn.farge;
+  }
+  return meta.farge;
 }
 
 module.exports = render;
