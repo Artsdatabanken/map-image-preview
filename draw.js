@@ -12,7 +12,7 @@ function render(geojson, meta, options = {}) {
   const ctx = canvas.getContext("2d");
   const scaling = {
     x: { offset: -bounds.left, scale: width / (bounds.right - bounds.left) },
-    y: { offset: -bounds.bottom, scale: height / (bounds.top - bounds.bottom) }
+    y: { offset: bounds.top, scale: height / (bounds.top - bounds.bottom) }
   };
   ctx.lineWidth = options.lineWidth;
   ctx.antialias = options.antialias || "default";
@@ -40,7 +40,7 @@ function drawGeometry(ctx, props, stroke, coordinates, scaling) {
   ctx.beginPath();
   coordinates.forEach(coordIn => {
     const x = (coordIn[0] + scaling.x.offset) * scaling.x.scale;
-    const y = (coordIn[1] + scaling.y.offset) * scaling.y.scale;
+    const y = (scaling.y.offset - coordIn[1]) * scaling.y.scale;
     ctx.lineTo(x, y);
   });
 
