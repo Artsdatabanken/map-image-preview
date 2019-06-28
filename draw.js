@@ -1,11 +1,14 @@
+const geometry = require("./geometry");
 const { createCanvas } = require("canvas");
 
 function render(geojson, meta, options = {}) {
+  const bounds = options.bounds;
   const width = parseInt(options.width) || 512;
-  const height = parseInt(options.height) || 512;
+  const height =
+    parseInt(options.height) ||
+    geometry.calculateHeightToMaintainAspect(width, bounds);
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
-  const bounds = options.bounds;
   const scaling = {
     x: { offset: -bounds.left, scale: width / (bounds.right - bounds.left) },
     y: { offset: -bounds.bottom, scale: height / (bounds.top - bounds.bottom) }
@@ -35,9 +38,7 @@ function drawGeometry(ctx, props, stroke, coordinates, scaling) {
     ctx.lineTo(x, y);
   });
 
-  if (stroke) {
-    ctx.stroke();
-  }
+  if (stroke) ctx.stroke();
   ctx.fill();
 }
 

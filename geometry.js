@@ -25,4 +25,11 @@ function grow(bbox, percentage) {
   };
 }
 
-module.exports = { bbox, grow };
+function calculateHeightToMaintainAspect(width, bbox) {
+  const height = Math.trunc(
+    (width / (bbox.right - bbox.left)) * (bbox.top - bbox.bottom)
+  );
+  return height;
+}
+
+module.exports = { bbox, grow, calculateHeightToMaintainAspect };
