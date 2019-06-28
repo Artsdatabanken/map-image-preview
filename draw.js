@@ -1,5 +1,6 @@
 const geometry = require("./geometry");
 const { createCanvas } = require("canvas");
+const tinycolor = require("tinycolor2");
 
 function render(geojson, meta, options = {}) {
   const bounds = options.bounds;
@@ -13,11 +14,16 @@ function render(geojson, meta, options = {}) {
     x: { offset: -bounds.left, scale: width / (bounds.right - bounds.left) },
     y: { offset: -bounds.bottom, scale: height / (bounds.top - bounds.bottom) }
   };
-  ctx.lineWidth = 1;
+  ctx.lineWidth = options.lineWidth;
   ctx.antialias = options.antialias || "default";
-  if (options.stroke) ctx.strokeStyle = options.stroke;
+
   geojson.features.forEach(feature => {
     ctx.fillStyle = meta.farge;
+    ctx.strokeStyle =
+      options.stroke ||
+      tinycolor(meta.farge)
+        .darken(40)
+        .toString();
     drawGeometries(ctx, options.stroke, feature, scaling);
   });
 
@@ -38,8 +44,8 @@ function drawGeometry(ctx, props, stroke, coordinates, scaling) {
     ctx.lineTo(x, y);
   });
 
-  if (stroke) ctx.stroke();
   ctx.fill();
+  ctx.stroke();
 }
 
 module.exports = render;
