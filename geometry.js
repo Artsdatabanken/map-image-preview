@@ -1,15 +1,23 @@
 function bbox(geojson) {
   const bbox = { left: 9e9, bottom: 9e9, right: -9e9, top: -9e9 };
   geojson.features.forEach(feature => {
-    feature.geometry.coordinates.forEach(coordinates => {
-      coordinates.forEach(coord => {
-        bbox.left = Math.min(bbox.left, coord[0]);
-        bbox.right = Math.max(bbox.right, coord[0]);
-        bbox.bottom = Math.min(bbox.bottom, coord[1]);
-        bbox.top = Math.max(bbox.top, coord[1]);
-      });
-    });
+    if (!feature.geometry) return;
+    bboxgeom(feature.geometry.coordinates, bbox);
   });
+  return bbox;
+}
+
+function bboxgeom(coord, bbox) {
+  if (Array.isArray(coord[0])) {
+    coord.forEach(co2 => {
+      bboxgeom(co2, bbox);
+    });
+  } else {
+    bbox.left = Math.min(bbox.left, coord[0]);
+    bbox.right = Math.max(bbox.right, coord[0]);
+    bbox.bottom = Math.min(bbox.bottom, coord[1]);
+    bbox.top = Math.max(bbox.top, coord[1]);
+  }
   return bbox;
 }
 

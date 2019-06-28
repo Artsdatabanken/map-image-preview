@@ -31,9 +31,10 @@ function render(geojson, meta, options = {}) {
 }
 
 function drawGeometries(ctx, stroke, feature, scaling) {
-  feature.geometry.coordinates.forEach(coordinates =>
-    drawGeometry(ctx, feature.properties, stroke, coordinates, scaling)
-  );
+  feature.geometry &&
+    feature.geometry.coordinates.forEach(coordinates =>
+      drawGeometry(ctx, feature.properties, stroke, coordinates, scaling)
+    );
 }
 
 function drawGeometry(ctx, props, stroke, coordinates, scaling) {
