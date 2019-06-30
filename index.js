@@ -2,21 +2,22 @@
 const fs = require("fs");
 const draw = require("./draw");
 const geometry = require("./geometry");
-const args = require("./args");
+const commandLineArgs = require("./commandLineArgs");
 
-const argv = args.parse();
-const meta = argv.meta
+const args = commandLineArgs.parse();
+
+const meta = args.meta
   ? JSON.parse(fs.readFileSync(metajsonFile))
-  : { farge: argv.color };
+  : { farge: args.color };
 
-const geojsonFile = argv._[0];
+const geojsonFile = args._[0];
 const geojson = JSON.parse(fs.readFileSync(geojsonFile));
 const bbox = geometry.bbox(geojson);
 
 const options = {
-  width: argv.width,
-  stroke: argv.stroke,
-  bounds: geometry.grow(bbox, argv.bboxscale)
+  width: args.width,
+  stroke: args.stroke,
+  bounds: geometry.grow(bbox, args.bboxscale - 1)
 };
 const render = draw(geojson, meta, options);
 const { width, height } = render;
@@ -29,7 +30,7 @@ const summary = {
   bbox: options.bounds,
   image: { width, height },
   color: meta.farge,
-  stroke: argv.stroke,
+  stroke: args.stroke,
   crs: geojson.crs && geojson.crs.properties && geojson.crs.properties.name
 };
 console.log(wms);
