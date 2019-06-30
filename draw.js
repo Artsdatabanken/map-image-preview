@@ -25,13 +25,13 @@ function render(geojson, meta, options = {}) {
       tinycolor(ctx.fillStyle)
         .darken(30)
         .toString();
-    drawGeometries(ctx, options.stroke, feature, scaling);
+    drawGeometries(ctx, feature, scaling);
   });
 
   return { buffer: canvas.toBuffer(), width, height };
 }
 
-function drawGeometries(ctx, stroke, feature, scaling) {
+function drawGeometries(ctx, feature, scaling) {
   feature.geometry &&
     feature.geometry.coordinates.forEach(coordinates =>
       drawGeometry(ctx, coordinates, scaling)
