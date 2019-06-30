@@ -39,4 +39,6 @@ const summary = {
 console.log(wms);
 console.log(summary);
 
+fs.writeFileSync("thumbnail.json", JSON.stringify(summary));
+
 fs.writeFileSync("thumbnail.png", render.buffer);
