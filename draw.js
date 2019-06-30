@@ -16,6 +16,7 @@ function render(geojson, meta, options = {}) {
   };
   ctx.lineWidth = options.lineWidth;
   ctx.antialias = options.antialias || "default";
+  //  ctx.globalCompositeOperation = "multiply";
 
   geojson.features.forEach(feature => {
     ctx.fillStyle = lookupColor(meta, feature.properties);
@@ -27,7 +28,7 @@ function render(geojson, meta, options = {}) {
     drawGeometries(ctx, options.stroke, feature, scaling);
   });
 
-  return canvas.toBuffer();
+  return { buffer: canvas.toBuffer(), width, height };
 }
 
 function drawGeometries(ctx, stroke, feature, scaling) {
