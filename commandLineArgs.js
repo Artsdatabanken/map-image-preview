@@ -24,7 +24,6 @@ function parse() {
     usage();
     process.exit(1);
   }
-  console.log(argv);
   return argv;
 }
 
