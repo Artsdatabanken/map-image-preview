@@ -2,37 +2,9 @@
 const fs = require("fs");
 const draw = require("./draw");
 const geometry = require("./geometry");
-const minimist = require("minimist");
+const args = require("./args");
 
-var argv = minimist(process.argv.slice(2), {
-  stopEarly: true,
-  alias: { B: "bboxscale", C: "color", W: "width", S: "stroke", M: "meta" },
-  default: { bboxscale: 1, color: "#f44", width: 408, stroke: 0.5 }
-});
-if (argv._.length !== 1) {
-  console.log("Usage: node map-image-preview <options> [mapfile]");
-  console.log("");
-  console.log("mapfile    GeoJSON map source file for the preview");
-  console.log("");
-  console.log("Options:");
-  console.log(
-    "   -W --width [0..]          Set the output image width in pixels"
-  );
-  console.log(
-    "   -S --stroke [0.0..]      Set the outline line width in pixels"
-  );
-
-  console.log(
-    "   -B --bboxscale [0.0..]    Set the bounding box scaling factor, 1.1 = 10% margin"
-  );
-  console.log(
-    "   -M --meta [file.json]     Optional file containing map layer colors"
-  );
-  console.log("");
-  process.exit(1);
-}
-console.log(argv);
-
+const argv = args.parse();
 const meta = argv.meta
   ? JSON.parse(fs.readFileSync(metajsonFile))
   : { farge: argv.color };
@@ -53,7 +25,13 @@ const bb = options.bounds;
 const bbs = bb.left + "," + bb.bottom + "," + bb.right + "," + bb.top;
 const wms = `wget -q https://openwms.statkart.no/skwms1/wms.topo4.graatone?request=GetMap&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=${bbs}&SRS=EPSG:32633&WIDTH=${width}&HEIGHT=${height}&LAYERS=topo4graatone_WMS&STYLES=&FORMAT=image/png&DPI=96&MAP_RESOLUTION=96&FORMAT_OPTIONS=dpi:96&TRANSPARENT=TRUE -O ${process.cwd()}/topo4.png`;
 
-const summary = { bbox: options.bounds, image: { width, height } };
+const summary = {
+  bbox: options.bounds,
+  image: { width, height },
+  color: meta.farge,
+  stroke: argv.stroke,
+  crs: geojson.crs && geojson.crs.properties && geojson.crs.properties.name
+};
 console.log(wms);
 console.log(summary);
 
