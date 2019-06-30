@@ -39,6 +39,12 @@ function drawGeometries(ctx, feature, scaling) {
 }
 
 function drawGeometry(ctx, coordinates, scaling) {
+  if (Array.isArray(coordinates[0])) {
+    coordinates.forEach(coord => {
+      drawGeometry(ctx, coord, scaling);
+      return;
+    });
+  }
   ctx.beginPath();
   coordinates.forEach(coordIn => {
     const x = (coordIn[0] + scaling.x.offset) * scaling.x.scale;
