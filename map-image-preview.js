@@ -25,10 +25,6 @@ const options = {
 const render = draw(geojson, meta, options);
 const { width, height } = render;
 
-const bb = options.bounds;
-const bbs = bb.left + "," + bb.bottom + "," + bb.right + "," + bb.top;
-const wms = `wget -q https://openwms.statkart.no/skwms1/wms.topo4.graatone?request=GetMap&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&BBOX=${bbs}&SRS=EPSG:32633&WIDTH=${width}&HEIGHT=${height}&LAYERS=topo4graatone_WMS&STYLES=&FORMAT=image/png&DPI=96&MAP_RESOLUTION=96&FORMAT_OPTIONS=dpi:96&TRANSPARENT=TRUE -O ${process.cwd()}/topo4.png`;
-
 const summary = {
   bbox: options.bounds,
   image: { width, height },
@@ -37,8 +33,6 @@ const summary = {
   strokeWidth: args.stroke,
   crs: geojson.crs && geojson.crs.properties && geojson.crs.properties.name
 };
-console.log(wms);
-console.log(summary);
 
 fs.writeFileSync("thumbnail.json", JSON.stringify(summary));
 fs.writeFileSync("thumbnail.png", render.buffer);
