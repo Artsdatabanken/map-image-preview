@@ -30,7 +30,7 @@ const summary = {
   bbox: options.bounds,
   image: { width, height },
   color: meta.farge,
-  stroke: args.stroke,
+  strokeWidth: args.stroke,
   crs: geojson.crs && geojson.crs.properties && geojson.crs.properties.name
 };
 console.log(wms);
