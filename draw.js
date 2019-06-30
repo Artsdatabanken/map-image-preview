@@ -19,7 +19,11 @@ function render(geojson, meta, options = {}) {
   //  ctx.globalCompositeOperation = "multiply";
 
   geojson.features.forEach(feature => {
-    ctx.fillStyle = lookupColor(meta, feature.properties);
+    ctx.fillStyle = lookupColor(
+      meta,
+      feature.properties,
+      options.colorProperty
+    );
     ctx.strokeStyle =
       options.strokeColor ||
       tinycolor(ctx.fillStyle)
@@ -56,15 +60,15 @@ function drawGeometry(ctx, coordinates, scaling) {
   ctx.stroke();
 }
 
-function lookupColor(meta, properties) {
+function lookupColor(meta, properties, colorProperty) {
   if (!properties) return meta.farge;
   if (!meta.barn) return meta.farge;
-  let code = properties.code;
-  if (!code) return meta.farge;
-  code = code.replace("LA-", "-");
-  code = code.replace("NA-", "-");
+  let key = properties[colorProperty];
+  if (!key) return meta.farge;
+  key = key.replace("LA-", "-");
+  key = key.replace("NA-", "-");
   for (var barn of meta.barn) {
-    if (barn.kode.indexOf(code) >= 0) return barn.farge;
+    if (barn[colorProperty].indexOf(key) >= 0) return barn.farge;
   }
   return meta.farge;
 }

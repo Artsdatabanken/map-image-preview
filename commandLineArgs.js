@@ -6,12 +6,19 @@ function parse() {
     alias: {
       B: "bboxscale",
       C: "color",
+      CP: "colorProperty",
       W: "width",
       S: "strokeWidth",
       SC: "strokeColor",
       M: "meta"
     },
-    default: { bboxscale: 1, color: "#f44", width: 408, stroke: 0.5 }
+    default: {
+      bboxscale: 1,
+      color: "#f44",
+      colorProperty: "kode",
+      width: 408,
+      stroke: 0.5
+    }
   });
   if (argv._.length !== 1) {
     usage();
@@ -41,6 +48,9 @@ function usage() {
   );
   console.log(
     "   -M  --meta [file.json]    Optional file containing map layer colors"
+  );
+  console.log(
+    "   -CP --colorProperty [key] GeoJSON property to use for color lookup.  Metadata must have keys with same name."
   );
   console.log("");
 }

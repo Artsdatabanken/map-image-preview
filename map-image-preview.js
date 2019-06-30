@@ -7,7 +7,7 @@ const commandLineArgs = require("./commandLineArgs");
 const args = commandLineArgs.parse();
 
 const meta = args.meta
-  ? JSON.parse(fs.readFileSync(metajsonFile))
+  ? JSON.parse(fs.readFileSync(args.meta))
   : { farge: args.color };
 
 const geojsonFile = args._[0];
@@ -15,11 +15,12 @@ const geojson = JSON.parse(fs.readFileSync(geojsonFile));
 const bbox = geometry.bbox(geojson);
 
 const options = {
-  width: args.width,
+  bounds: geometry.grow(bbox, args.bboxscale - 1),
+  colorProperty: args.colorProperty,
   stroke: args.stroke,
   strokeColor: args.strokeColor,
   strokeWidth: args.strokeWidth,
-  bounds: geometry.grow(bbox, args.bboxscale - 1)
+  width: args.width
 };
 const render = draw(geojson, meta, options);
 const { width, height } = render;
@@ -40,5 +41,4 @@ console.log(wms);
 console.log(summary);
 
 fs.writeFileSync("thumbnail.json", JSON.stringify(summary));
-
 fs.writeFileSync("thumbnail.png", render.buffer);

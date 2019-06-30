@@ -21,6 +21,7 @@ Options:
    -C  --color #f84          Set the fill color (hex code)
    -B  --bboxscale [0.0..]   Set the bounding box scaling factor, 1.1 = 10% margin
    -M  --meta [file.json]    Optional file containing map layer colors
+   -CP --colorProperty [key] GeoJSON property to use for color lookup.  Metadata must have keys with same name.
 ```
 
 ## Example
@@ -32,6 +33,14 @@ node map-image-preview.js --width 600 --strokeColor "rgba(0,0,255,0.7)" --color 
 ![Sample](doc/world_example.png)
 
 ## Arguments
+
+### Color property
+
+```
+node map-image-preview.js --width 600 --colorProperty admin --meta example/world.json example/world.geojson
+```
+
+![Scale 0.8](doc/world_colorprop_example.png)
 
 ### Scale factor
 
