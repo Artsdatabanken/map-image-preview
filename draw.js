@@ -14,7 +14,7 @@ function render(geojson, meta, options = {}) {
     x: { offset: -bounds.left, scale: width / (bounds.right - bounds.left) },
     y: { offset: bounds.top, scale: height / (bounds.top - bounds.bottom) }
   };
-  ctx.lineWidth = options.lineWidth;
+  ctx.lineWidth = options.stroke;
   ctx.antialias = options.antialias || "default";
   //  ctx.globalCompositeOperation = "multiply";
 
@@ -52,6 +52,7 @@ function drawGeometry(ctx, props, stroke, coordinates, scaling) {
 
 function lookupColor(meta, properties) {
   if (!properties) return meta.farge;
+  if (!meta.barn) return meta.farge;
   let code = properties.code;
   if (!code) return meta.farge;
   code = code.replace("LA-", "-");

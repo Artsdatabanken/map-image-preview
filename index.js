@@ -2,24 +2,49 @@
 const fs = require("fs");
 const draw = require("./draw");
 const geometry = require("./geometry");
+const minimist = require("minimist");
 
-var argv = process.argv.slice(2);
-if (argv.length !== 2) {
-  console.log("Usage: node map-image-preview [map.geojson] [metadata.json]");
+var argv = minimist(process.argv.slice(2), {
+  stopEarly: true,
+  alias: { B: "bboxscale", C: "color", W: "width", S: "stroke", M: "meta" },
+  default: { bboxscale: 1, color: "#f44", width: 408, stroke: 0.5 }
+});
+if (argv._.length !== 1) {
+  console.log("Usage: node map-image-preview <options> [mapfile]");
+  console.log("");
+  console.log("mapfile    GeoJSON map source file for the preview");
+  console.log("");
+  console.log("Options:");
+  console.log(
+    "   -W --width [0..]          Set the output image width in pixels"
+  );
+  console.log(
+    "   -S --stroke [0.0..]      Set the outline line width in pixels"
+  );
+
+  console.log(
+    "   -B --bboxscale [0.0..]    Set the bounding box scaling factor, 1.1 = 10% margin"
+  );
+  console.log(
+    "   -M --meta [file.json]     Optional file containing map layer colors"
+  );
   console.log("");
   process.exit(1);
 }
+console.log(argv);
 
-const [geojsonFile, metajsonFile] = argv;
+const meta = argv.meta
+  ? JSON.parse(fs.readFileSync(metajsonFile))
+  : { farge: argv.color };
 
-const meta = JSON.parse(fs.readFileSync(metajsonFile));
+const geojsonFile = argv._[0];
 const geojson = JSON.parse(fs.readFileSync(geojsonFile));
 const bbox = geometry.bbox(geojson);
 
 const options = {
-  width: 1000,
-  lineWidth: 0.5,
-  bounds: geometry.grow(bbox, 0.1)
+  width: argv.width,
+  stroke: argv.stroke,
+  bounds: geometry.grow(bbox, argv.bboxscale)
 };
 const render = draw(geojson, meta, options);
 const { width, height } = render;
