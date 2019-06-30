@@ -17,6 +17,8 @@ const bbox = geometry.bbox(geojson);
 const options = {
   width: args.width,
   stroke: args.stroke,
+  strokeColor: args.strokeColor,
+  strokeWidth: args.strokeWidth,
   bounds: geometry.grow(bbox, args.bboxscale - 1)
 };
 const render = draw(geojson, meta, options);
@@ -30,6 +32,7 @@ const summary = {
   bbox: options.bounds,
   image: { width, height },
   color: meta.farge,
+  strokeColor: options.strokeColor,
   strokeWidth: args.stroke,
   crs: geojson.crs && geojson.crs.properties && geojson.crs.properties.name
 };
