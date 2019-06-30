@@ -27,7 +27,8 @@ Options:
 ## Example
 
 ```bash
-node map-image-preview.js --width 600 --strokeColor "rgba(0,0,255,0.7)" --color "#ff6" --strokeWidth 0.5 example/world.geojson
+node map-image-preview.js --width 600 --strokeColor "rgba(0,0,255,0.7)" \
+--color "#ff6" --strokeWidth 0.5 example/world.geojson
 ```
 
 ![Sample](doc/world_example.png)
@@ -37,7 +38,8 @@ node map-image-preview.js --width 600 --strokeColor "rgba(0,0,255,0.7)" --color 
 ### Color property
 
 ```
-node map-image-preview.js --width 600 --colorProperty admin --meta example/world.json example/world.geojson
+node map-image-preview.js --width 600 --colorProperty admin \
+--meta example/world.json example/world.geojson
 ```
 
 ![Scale 0.8](doc/world_colorprop_example.png)
