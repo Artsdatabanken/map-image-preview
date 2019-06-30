@@ -26,7 +26,7 @@ Options:
 ## Example
 
 ```bash
-node index.js --width 600 --strokeColor "rgba(0,0,255,0.7)" --color "#ff6" --strokeWidth 0.5 example/world.geojson
+node map-image-preview.js --width 600 --strokeColor "rgba(0,0,255,0.7)" --color "#ff6" --strokeWidth 0.5 example/world.geojson
 ```
 
 ![Sample](doc/world_example.png)
