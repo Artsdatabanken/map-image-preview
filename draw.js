@@ -14,14 +14,14 @@ function render(geojson, meta, options = {}) {
     x: { offset: -bounds.left, scale: width / (bounds.right - bounds.left) },
     y: { offset: bounds.top, scale: height / (bounds.top - bounds.bottom) }
   };
-  ctx.lineWidth = options.stroke;
+  ctx.lineWidth = options.strokeWidth;
   ctx.antialias = options.antialias || "default";
   //  ctx.globalCompositeOperation = "multiply";
 
   geojson.features.forEach(feature => {
     ctx.fillStyle = lookupColor(meta, feature.properties);
     ctx.strokeStyle =
-      options.stroke ||
+      options.strokeColor ||
       tinycolor(ctx.fillStyle)
         .darken(30)
         .toString();
@@ -34,11 +34,11 @@ function render(geojson, meta, options = {}) {
 function drawGeometries(ctx, stroke, feature, scaling) {
   feature.geometry &&
     feature.geometry.coordinates.forEach(coordinates =>
-      drawGeometry(ctx, feature.properties, stroke, coordinates, scaling)
+      drawGeometry(ctx, coordinates, scaling)
     );
 }
 
-function drawGeometry(ctx, props, stroke, coordinates, scaling) {
+function drawGeometry(ctx, coordinates, scaling) {
   ctx.beginPath();
   coordinates.forEach(coordIn => {
     const x = (coordIn[0] + scaling.x.offset) * scaling.x.scale;
