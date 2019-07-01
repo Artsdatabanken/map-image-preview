@@ -10,6 +10,8 @@ Reads vector format map polygons and renders into to a bitmap file
 # Usage
 
 ```
+map-image-preview v1.5.0
+
 Usage: node map-image-preview <options> [mapfile]
 
 mapfile    GeoJSON map source file for the preview

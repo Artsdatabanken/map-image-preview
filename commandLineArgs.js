@@ -1,4 +1,5 @@
 const minimist = require("minimist");
+const pkg = require("./package");
 
 function parse() {
   var argv = minimist(process.argv.slice(2), {
@@ -29,6 +30,8 @@ function parse() {
 }
 
 function usage() {
+  console.log(pkg.name + " v" + pkg.version);
+  console.log("");
   console.log("Usage: node map-image-preview <options> [mapfile]");
   console.log("");
   console.log("mapfile    GeoJSON map source file for the preview");
