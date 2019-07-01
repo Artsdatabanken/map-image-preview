@@ -22,6 +22,7 @@ Options:
    -B  --bboxscale [0.0..]   Set the bounding box scaling factor, 1.1 = 10% margin
    -M  --meta [file.json]    Optional file containing map layer colors
    -CP --colorProperty [key] GeoJSON property to use for color lookup.  Metadata must have keys with same name.
+   -O  --output [file]       Filename of output files, file extension will be added.
 ```
 
 ## Example

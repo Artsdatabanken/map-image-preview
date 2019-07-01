@@ -18,6 +18,7 @@ const bbox = geometry.bbox(geojson);
 const options = {
   bounds: geometry.grow(bbox, args.bboxscale - 1),
   colorProperty: args.colorProperty,
+  output: args.output || geojsonFile,
   stroke: args.stroke,
   strokeColor: args.strokeColor,
   strokeWidth: args.strokeWidth,
@@ -35,7 +36,7 @@ const summary = {
   crs: geojson.crs && geojson.crs.properties && geojson.crs.properties.name
 };
 
-const parsed = path.parse(geojsonFile);
+const parsed = path.parse(options.output);
 const basename = path.join(parsed.dir, parsed.name);
 fs.writeFileSync(basename + ".json", JSON.stringify(summary));
 fs.writeFileSync(basename + ".png", render.buffer);

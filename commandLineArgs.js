@@ -10,7 +10,8 @@ function parse() {
       W: "width",
       S: "strokeWidth",
       SC: "strokeColor",
-      M: "meta"
+      M: "meta",
+      O: "output"
     },
     default: {
       bboxscale: 1,
@@ -50,6 +51,9 @@ function usage() {
   );
   console.log(
     "   -CP --colorProperty [key] GeoJSON property to use for color lookup.  Metadata must have keys with same name."
+  );
+  console.log(
+    "   -O  --output [file]       Filename of output files, file extension will be added."
   );
   console.log("");
 }
