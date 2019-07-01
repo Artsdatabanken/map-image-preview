@@ -63,7 +63,7 @@ function drawGeometry(ctx, coordinates, scaling) {
 function lookupColor(meta, properties, colorProperty) {
   if (!properties) return meta.farge;
   if (!meta.barn) return meta.farge;
-  let key = properties[colorProperty];
+  let key = properties[colorProperty] || properties.code; //HACK
   if (!key) return meta.farge;
   key = key.replace("LA-", "-");
   key = key.replace("NA-", "-");
