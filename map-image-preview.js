@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 const fs = require("fs");
+const path = require("path");
 const draw = require("./draw");
 const geometry = require("./geometry");
 const commandLineArgs = require("./commandLineArgs");
@@ -34,5 +35,7 @@ const summary = {
   crs: geojson.crs && geojson.crs.properties && geojson.crs.properties.name
 };
 
-fs.writeFileSync("thumbnail.json", JSON.stringify(summary));
-fs.writeFileSync("thumbnail.png", render.buffer);
+const parsed = path.parse(geojsonFile);
+const basename = path.join(parsed.dir, parsed.name);
+fs.writeFileSync(basename + ".json", JSON.stringify(summary));
+fs.writeFileSync(basename + ".png", render.buffer);
