@@ -85,3 +85,31 @@ npx map-image-preview --meta meta.json example/world.geojson
   ]
 }
 ```
+
+## Composing background map
+
+The app [wms-save-image](https://github.com/Artsdatabanken/wms-save-image) may be used to download background maps from any WMS server for use in combination with images from this program. It will read the generated JSON file.
+
+### Compose single image
+
+Using convert program from Imagemagick to composite the images. To install Imagemagick:
+
+```bash
+sudo apt install imagemagick
+```
+
+To compose images:
+
+```bash
+convert thumbnail_back.png thumbnail.32633.png -compose Multiply -composite thumbnail.png
+```
+
+![Composed example](doc/composite.png)
+
+### Compose images recursively
+
+```bash
+find . -type d -exec sh -c "cd \"{}\" && pwd && \
+  [ -f thumbnail.json ] && \
+  convert thumbnail_back.png thumbnail.32633.png -compose Multiply -composite thumbnail.png" \;
+```
