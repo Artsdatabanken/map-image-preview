@@ -51,7 +51,7 @@ node map-image-preview.js --width 600 --colorProperty admin \
 
 The default scale factor of 1 will fit the map data precisely inside the target raster.
 
-#### Scale factor 80%
+#### Scale factor 120%
 
 ```bash
 npx map-image-preview --bboxscale 0.8 --width 300 example/world.geojson
@@ -59,7 +59,7 @@ npx map-image-preview --bboxscale 0.8 --width 300 example/world.geojson
 
 ![Scale 0.8](doc/world_scale_0.8.png)
 
-#### Scale factor 120%
+#### Scale factor 80%
 
 ```bash
 npx map-image-preview --bboxscale 0.8 --width 300 example/world.geojson
