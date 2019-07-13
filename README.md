@@ -18,9 +18,9 @@ mapfile    GeoJSON map source file for the preview
 
 Options:
    -W  --width [0..]         Set the output image width in pixels
-   -S  --strokeWidth [0.0..] Set the outline line width in pixels
-   -SC --strokeColor #222    Set the outline color (hex code)
-   -C  --color #f84          Set the fill color (hex code)
+   -L  --strokeWidth [0.0..] Set the outline line width in pixels
+   -S  --strokeColor #222    Set the outline color (hex code)
+   -F  --fillColor #f84      Set the fill color (hex code)
    -B  --bboxscale [0.0..]   Set the bounding box scaling factor, 1.1 = 10% margin
    -M  --meta [file.json]    Optional file containing map layer colors
    -CP --colorProperty [key] GeoJSON property to use for color lookup.  Metadata must have keys with same name.
@@ -31,7 +31,7 @@ Options:
 
 ```bash
 node map-image-preview.js --width 600 --strokeColor "rgba(0,0,255,0.7)" \
-  --color "#ff6" --strokeWidth 0.5 example/world.geojson
+  --fillColor "#ff6" --strokeWidth 0.5 example/world.geojson
 ```
 
 ![Sample](doc/world_example.png)

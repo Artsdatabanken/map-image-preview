@@ -9,8 +9,8 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/map-image-preview.js",
-      "args": ["-C", "'#f33'", "polygon.32633.geojson"],
-      "args2": ["-C", "'#f33'", "-M", "metadata.json", "polygon.32633.geojson"]
+      "args": ["-F", "#f00", "-S", "#00f", "polygon.32633.geojson"],
+      "args2": ["-C", "#f33", "-M", "metadata.json", "polygon.32633.geojson"]
     }
   ]
 }

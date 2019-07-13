@@ -6,20 +6,20 @@ function parse() {
     stopEarly: true,
     alias: {
       B: "bboxscale",
-      C: "color",
+      F: "fillColor",
       CP: "colorProperty",
       W: "width",
-      S: "strokeWidth",
-      SC: "strokeColor",
+      L: "strokeWidth",
+      S: "strokeColor",
       M: "meta",
       O: "output"
     },
     default: {
       bboxscale: 1,
-      color: "#f44",
+      fillColor: "#f44",
       colorProperty: "kode",
       width: 408,
-      stroke: 0.5
+      strokeWidth: 0.5
     }
   });
   if (argv._.length !== 1) {

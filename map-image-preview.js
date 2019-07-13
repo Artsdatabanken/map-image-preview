@@ -9,7 +9,7 @@ const args = commandLineArgs.parse();
 
 const meta = args.meta
   ? JSON.parse(fs.readFileSync(args.meta))
-  : { farge: args.color };
+  : { farge: args.fillColor };
 
 const geojsonFile = args._[0];
 const geojson = JSON.parse(fs.readFileSync(geojsonFile));
