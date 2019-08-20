@@ -1,6 +1,6 @@
 {
   "name": "map-image-preview",
-  "version": "1.6.0",
+  "version": "1.6.4",
   "description": "Render static raster preview images of maps",
   "main": "map-image-preview.js",
   "scripts": {

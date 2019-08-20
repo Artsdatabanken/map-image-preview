@@ -4,8 +4,10 @@ const path = require("path");
 const draw = require("./draw");
 const geometry = require("./geometry");
 const commandLineArgs = require("./commandLineArgs");
+const package = require("./package");
 
 const args = commandLineArgs.parse();
+console.log(package.name + " v" + package.version);
 
 const meta = args.meta
   ? JSON.parse(fs.readFileSync(args.meta))
@@ -13,7 +15,9 @@ const meta = args.meta
 
 const geojsonFile = args._[0];
 const geojson = JSON.parse(fs.readFileSync(geojsonFile));
-const bbox = geometry.bbox(geojson);
+
+let bbox = geometry.bbox(geojson);
+if (args.maxbounds) bbox = geometry.limitBounds(bbox, args.maxbounds);
 
 const options = {
   bounds: geometry.grow(bbox, args.bboxscale - 1),
@@ -24,8 +28,10 @@ const options = {
   strokeWidth: args.strokeWidth,
   width: args.width
 };
-if (args.maxbounds)
-  options.bounds = geometry.limitBounds(options.bounds, args.maxbounds);
+console.log("bbox:    ", bbox);
+console.log("bounds:  ", options.bounds);
+console.log("bounds2: ", options.bounds);
+
 const render = draw(geojson, meta, options);
 const { width, height } = render;
 
