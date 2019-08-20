@@ -1,3 +1,13 @@
+function limitBounds(bounds, maxboundsString) {
+  const maxbounds = JSON.parse(maxboundsString);
+  return {
+    left: Math.max(bounds.left, maxbounds.left),
+    right: Math.min(bounds.right, maxbounds.right),
+    bottom: Math.max(bounds.bottom, maxbounds.bottom),
+    top: Math.min(bounds.top, maxbounds.top)
+  };
+}
+
 function bbox(geojson) {
   const bbox = { left: 9e9, bottom: 9e9, right: -9e9, top: -9e9 };
   geojson.features.forEach(feature => {
@@ -40,4 +50,40 @@ function calculateHeightToMaintainAspect(width, bbox) {
   return height;
 }
 
-module.exports = { bbox, grow, calculateHeightToMaintainAspect };
+function polygonArea(polygon) {
+  const numPoints = polygon.length;
+  let area = 0;
+  let prev = polygon[0];
+  for (let i = 1; i <= numPoints; i++) {
+    let cur = polygon[i % numPoints];
+    area += (prev[0] + cur[0]) * (prev[1] - cur[1]);
+    prev = cur;
+  }
+  return Math.abs(area / 2);
+}
+
+/**
+ * Calculate area covered by geometry
+ * Makes most sense to use on UTM coordinates - does not reproject coordinates
+ * @return {number} Area in square meters (if input is UTM)
+ */
+function calculateArea(geojson) {
+  if (geojson.features) return calculateArea(geojson.features);
+  let area = 0;
+  if (geojson[0].type === "Feature")
+    geojson.forEach(
+      feature => (area += calculateArea(feature.geometry.coordinates))
+    );
+  else if (Array.isArray(geojson[0][0]))
+    geojson.forEach(geom => (area += calculateArea(geom)));
+  else return polygonArea(geojson);
+  return area;
+}
+
+module.exports = {
+  bbox,
+  calculateArea,
+  grow,
+  calculateHeightToMaintainAspect,
+  limitBounds
+};

@@ -24,6 +24,8 @@ const options = {
   strokeWidth: args.strokeWidth,
   width: args.width
 };
+if (args.maxbounds)
+  options.bounds = geometry.limitBounds(options.bounds, args.maxbounds);
 const render = draw(geojson, meta, options);
 const { width, height } = render;
 

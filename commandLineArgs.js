@@ -10,6 +10,7 @@ function parse() {
       CP: "colorProperty",
       W: "width",
       L: "strokeWidth",
+      X: "maxbounds",
       S: "strokeColor",
       M: "meta",
       O: "output"
@@ -57,6 +58,9 @@ function usage() {
   );
   console.log(
     "   -O  --output [file]       Filename of output files, file extension will be added."
+  );
+  console.log(
+    "   -X  --maxbounds {left:1,bottom:2,right:3,top:4}  The maximum bounds for limiting image extents."
   );
   console.log("");
 }
