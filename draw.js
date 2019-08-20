@@ -14,10 +14,18 @@ function render(geojson, meta, options = {}) {
     x: { offset: -bounds.left, scale: width / (bounds.right - bounds.left) },
     y: { offset: bounds.top, scale: height / (bounds.top - bounds.bottom) }
   };
+  debugger;
   ctx.lineWidth = options.strokeWidth;
   ctx.antialias = options.antialias || "default";
+  ctx.antialias = "none";
+  ctx.globalCompositeOperation = "multiply";
+  ctx.quality = "nearest";
   //  ctx.globalCompositeOperation = "multiply";
-
+  const area = geometry.calculateArea(geojson.features);
+  const ssArea = area * scaling.x.scale * scaling.y.scale;
+  const coverageFraction = ssArea / height / width;
+  ctx.lineWidth *= 0.1 * Math.pow(2.3, Math.log10(1 / coverageFraction));
+  ctx.lineWidth = 0.5;
   geojson.features.forEach(feature => {
     ctx.fillStyle = lookupColor(
       meta,
@@ -27,7 +35,7 @@ function render(geojson, meta, options = {}) {
     ctx.strokeStyle =
       options.strokeColor ||
       tinycolor(ctx.fillStyle)
-        .darken(30)
+        .darken(10)
         .toString();
     drawGeometries(ctx, feature, scaling);
   });
@@ -55,9 +63,9 @@ function drawGeometry(ctx, coordinates, scaling) {
     const y = (scaling.y.offset - coordIn[1]) * scaling.y.scale;
     ctx.lineTo(x, y);
   });
-
-  ctx.fill();
+  ctx.closePath();
   ctx.stroke();
+  ctx.fill();
 }
 
 function lookupColor(meta, properties, colorProperty) {
