@@ -7,10 +7,10 @@ Reads vector format map polygons and renders into to a bitmap file
 - Selectable colors
 - Selectable outline stroke
 
-# Usage
+## Usage
 
 ```
-map-image-preview v1.5.0
+map-image-preview v1.6.4
 
 Usage: node map-image-preview <options> [mapfile]
 
@@ -18,13 +18,14 @@ mapfile    GeoJSON map source file for the preview
 
 Options:
    -W  --width [0..]         Set the output image width in pixels
-   -L  --strokeWidth [0.0..] Set the outline line width in pixels
-   -S  --strokeColor #222    Set the outline color (hex code)
-   -F  --fillColor #f84      Set the fill color (hex code)
+   -S  --strokeWidth [0.0..] Set the outline line width in pixels
+   -SC --strokeColor #222    Set the outline color (hex code)
+   -C  --color #f84          Set the fill color (hex code)
    -B  --bboxscale [0.0..]   Set the bounding box scaling factor, 1.1 = 10% margin
    -M  --meta [file.json]    Optional file containing map layer colors
    -CP --colorProperty [key] GeoJSON property to use for color lookup.  Metadata must have keys with same name.
    -O  --output [file]       Filename of output files, file extension will be added.
+   -X  --maxbounds {left:1,bottom:2,right:3,top:4}  The maximum bounds for limiting image extents.
 ```
 
 ## Example
@@ -51,7 +52,7 @@ node map-image-preview.js --width 600 --colorProperty admin \
 
 The default scale factor of 1 will fit the map data precisely inside the target raster.
 
-#### Scale factor 120%
+#### Scale factor 80%
 
 ```bash
 npx map-image-preview --bboxscale 0.8 --width 300 example/world.geojson
@@ -59,10 +60,10 @@ npx map-image-preview --bboxscale 0.8 --width 300 example/world.geojson
 
 ![Scale 0.8](doc/world_scale_0.8.png)
 
-#### Scale factor 80%
+#### Scale factor 120%
 
 ```bash
-npx map-image-preview --bboxscale 0.8 --width 300 example/world.geojson
+npx map-image-preview --bboxscale 1.2 --width 300 example/world.geojson
 ```
 
 ![Scale 1.2](doc/world_scale_1.2.png)
