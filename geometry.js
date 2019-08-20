@@ -35,11 +35,12 @@ function bboxgeom(coord, bbox) {
 function grow(bbox, percentage) {
   const width = percentage * (bbox.right - bbox.left);
   const height = percentage * (bbox.top - bbox.bottom);
+  const margin = Math.min(width, height) * 0.5;
   return {
-    left: bbox.left - width,
-    bottom: bbox.bottom - height,
-    right: bbox.right + width,
-    top: bbox.top + height
+    left: bbox.left - margin,
+    bottom: bbox.bottom - margin,
+    right: bbox.right + margin,
+    top: bbox.top + margin
   };
 }
 
